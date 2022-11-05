@@ -10,16 +10,16 @@
      <!-- change the word in after 5000/word to direct it to the file that you want to direct it to -->
       <form action = "http://localhost:5000/list" method = "post">
          <p>Enter Name:</p>
-         <p><input type = "text" name = "restaurant_name" /></p>
-         <p><input type = "text" name = "address" /></p>
-         <p><input type="checkbox"  name="vegetarian"></p>
-         <p><input type="checkbox"  name="vegan"></p>
-         <p><input type="checkbox"  name="gluten-free"></p>
-         <p><input type="checkbox"  name="halal"></p>
-         <p><input type = "number" name = "min-price" min = "1" max = "5"/></p>
-         <p><input type = "number" name = "max-price" min = "1" max = "5"/></p>
-         <p><input type = "number" name = "rating" min = "1" max = "10"/></p>
-         <p><input type = "string" name = "city" /></p>
+         <p><input type = "text" name = "restaurant_name" value = "default"/></p>
+         <p><input type = "text" name = "address" value = "default"/></p>
+         <p><input type="checkbox" name="vegetarian"></p>
+         <p><input type="checkbox" name="vegan"></p>
+         <p><input type="checkbox" name="gluten-free"></p>
+         <p><input type="checkbox" name="halal"></p>
+         <p><input type = "number" name = "min-price" min = "1" max = "5" value = "-1"/></p>
+         <p><input type = "number" name = "max-price" min = "1" max = "5" value = "-1"/></p>
+         <p><input type = "number" name = "rating" min = "1" max = "10" value = "-1"/></p>
+         <p><input type = "string" name = "city" value = "default"/></p>
          <p><input type = "submit" value = "submit" /></p>
       </form>
 
