@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="styles.css" rel="stylesheet">
+        <link href="join.css" rel="stylesheet">
+        <title>Join Leafing</title>
+    </head>
+    <body class="full-height-grow"  style = "background-image: url('joinBG.png')">
+        <div class="container full-height-grow">
+            <header class="main-header">
+                <a href="index.html" class="brand-logo">
+                    <img src="images/logo.png">
+                    <div class="brand-logo-name">Leafing</div>
+                </a>
+                <nav class = "main-nav">
+                    <ul>
+                        <li>
+                          <div class="dropdown">
+                            <button onclick="myFunction()" class="dropbtn">Dietary Restrictions</button>
+                            <div id="myDropdown" class="dropdown-content">
+                              <a href="list.html">Vegetarian</a>
+                              <a href="list.html">Vegan</a>
+                              <a href="list.html">Gluten-Free</a>
+                              <a href="list.html">Halal</a>
+                            </div>
+                          </div>
+                        </li>
+                        <li><a href = "addPlaces.html">Add Places</a></li>
+                        <li><a href = "about.html">About</a></li>
+                        <li><a href = "join.html">Join</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <section class="join-main-section">
+                <h1 class="join-text">Leafing<br>together.</h1>
+                <div class= "form-box">
+                    <form class="join-form">
+                        <div class = "inputBox">
+                            <input type = "text" required = "required">
+                            <span>Full Name</span>
+                        </div>
+                        <div class = "inputBox">
+                            <input type = "email" required = "required">
+                            <span>Email</span>
+                        </div>
+                        <div class = "inputBox">
+                            <input type = "password" required = "required">
+                            <span>Password</span>
+                        </div>
+                        <div class = "inputBoxSubmit">
+                            <button type="submit" class="btn">JOIN NOW</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </body>
+
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
+     
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
+    </script>
+</html>
+
