@@ -4,7 +4,7 @@
     as this .py file
 """
 
-from flask import Flask
+from flask import Flask, redirect, url_for, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 
@@ -47,12 +47,34 @@ class Restaurants(DB.Model):
 def testdb():
     try:
         DB.session.query(text("1")).from_statement(text("SELECT 1")).all()
-        return "<h1>It works.</h1>"
+        return render_template("index.html")
     except Exception as e:
         # e holds description of the error
         error_text = "<p>The error:<br>" + str(e) + "</p>"
         hed = "<h1>Something is broken.</h1>"
         return hed + error_text
+
+
+@app.route("/add", methods=["POST"])
+def add_entry():
+    if request.method == "POST":
+        restaurant_name = request.form["restaurant_name"]
+        address = request.form["address"]
+        label = request.form["label"]
+        price = float(request.form["price"])
+        rating = float(request.form["rating"])
+        # print("DATA\n\n\n\n\n\n\n")
+        print(restaurant_name, address, label, price, rating)
+        # print("DATA\n\n\n\n\n\n\n")
+        text = "<h1>" + str(restaurant_name) + "</h1>"
+        text += "<h1>" + str(address) + "</h1>"
+        text += "<h1>" + str(label) + "</h1>"
+        text += "<h1>" + str(price) + "</h1>"
+        text += "<h1>" + str(rating) + "</h1>"
+        return text
+    if request.method == "GET":
+        error_text = "<h1>Hello</h1>"
+        return error_text
 
 
 if __name__ == "__main__":
@@ -62,5 +84,4 @@ if __name__ == "__main__":
         print("Works")
     except:
         print("Doesn't works")
-
     app.run(debug=True)
