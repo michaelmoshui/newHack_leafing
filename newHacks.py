@@ -7,6 +7,7 @@
 from flask import Flask, redirect, url_for, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
+import sqlite3
 
 app = Flask(__name__)
 
@@ -22,13 +23,55 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 # this variable, db, will be used for all SQLAlchemy commands
 DB = SQLAlchemy(app)
+
+# conn_ = sqlite3.connect("""restaurant.db""")
+# cur_ = conn_.cursor()
 ############ DB set up ends
+def add_restaurant(DB, restaurant_name, address, label, price, rating):
+    """
+    Create a new task
+    :param conn:
+    :param task:
+    :param lable: string separated by space that has all the labels
+    :return:
+    """
+    # new_add = Restaurants(
+    #     # restaurant_id=number,
+    #     restaurant_name=restaurant_name,
+    #     address=address,
+    #     label=label,
+    #     price=price,
+    #     rating=rating,
+    # )
+    query = 'INSERT INTO restaurants(restaurant_name, address, label, price, rating) values("{res_name}", "{addr}", "{lab}", {pricing}, {rate})'.format(
+        res_name=restaurant_name, addr=address, lab=label, pricing=price, rate=rating,
+    )
+    with app.app_context():
+        DB.session.execute(query)
+        DB.session.commit()
+
+
+# class Restaurant_Entry(DB.Model):
+#     def __init__(self, number, restaurant_name, address, label, price, rating):
+#         self.number = number
+#         self.restaurant_name = restaurant_name
+#         self.address = address
+#         self.label = label
+#         self.price = price
+#         self.rating = rating
 
 
 class Restaurants(DB.Model):
     """
     initializes the database
     """
+
+    # # DB.Column("restaurant_id", DB.Integer, nullable=False, primary_key=True)
+    # DB.Column("restaurant_name", DB.String(100), nullable=False)
+    # DB.Column("address", DB.String(200), nullable=False)
+    # DB.Column("label", DB.String(150), nullable=False)
+    # DB.Column("price", DB.Integer, nullable=False)
+    # DB.Column("rating", DB.Integer, nullable=False)
 
     restaurant_id = DB.Column(DB.Integer, primary_key=True)
     restaurant_name = DB.Column(DB.String(100), nullable=False)
@@ -58,30 +101,43 @@ def testdb():
 @app.route("/add", methods=["POST"])
 def add_entry():
     if request.method == "POST":
+        # extract data from the html form
         restaurant_name = request.form["restaurant_name"]
         address = request.form["address"]
         label = request.form["label"]
         price = float(request.form["price"])
         rating = float(request.form["rating"])
+
+        # assume that the data at this point is fine to insert to the database
+
+        # TODO return error if not good
+        # michael said he will take care of it
+
+        ### debug stuff
         # print("DATA\n\n\n\n\n\n\n")
-        print(restaurant_name, address, label, price, rating)
+        # print(restaurant_name, address, label, price, rating)
         # print("DATA\n\n\n\n\n\n\n")
-        text = "<h1>" + str(restaurant_name) + "</h1>"
-        text += "<h1>" + str(address) + "</h1>"
-        text += "<h1>" + str(label) + "</h1>"
-        text += "<h1>" + str(price) + "</h1>"
-        text += "<h1>" + str(rating) + "</h1>"
-        return text
+        return render_template("index.html", restaurant_name=restaurant_name)
     if request.method == "GET":
         error_text = "<h1>Hello</h1>"
         return error_text
 
 
 if __name__ == "__main__":
-    try:
-        with app.app_context():
-            DB.create_all()
-        print("Works")
-    except:
-        print("Doesn't works")
-    app.run(debug=True)
+    with app.app_context():
+        DB.create_all()
+        # add_restaurant(
+        #     DB, "restaurant_name", "address", "label", "price", "rating",
+        # )
+        # add_restaurant(
+        #     DB,
+        #     restaurant_name="york",
+        #     address="Hello",
+        #     label="test",
+        #     price=10,
+        #     rating=2,
+        # )
+        # print("Works")
+
+    app.run()
+    # app.run(debug=True)
