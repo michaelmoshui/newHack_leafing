@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href = "add.css" rel = "stylesheet">
+  <title>Leafing</title>
+</head>
+   <body class = "container full-height-grow">
+     <header class = "main-header">
+         <a href = "/" class = "brand-logo">
+             <img src = "images/logo.png">
+             <div class = "brand-logo-name">Leafing</div>
+         </a>
+         <nav class = "main-nav">
+             <ul>
+                 <li>
+                   <div class="dropdown">
+                     <button onclick="myFunction()" class="dropbtn">Dietary Restrictions</button>
+                     <div id="myDropdown" class="dropdown-content">
+                       <a href="list.html">Vegetarian</a>
+                       <a href="list.html">Vegan</a>
+                       <a href="list.html">Gluten-Free</a>
+                       <a href="list.html">Halal</a>
+                     </div>
+                   </div>
+                 </li>
+                 <li><a href = "addPlaces.html">Add Places</a></li>
+                 <li><a href = "about.html">About</a></li>
+                 <li><a href = "join.html">Join</a></li>
+             </ul>
+         </nav>
+     </header>
+     <h1>Add a Restaurant</h1>
+      <form action = "http://localhost:5000/add" method = "post" class = "add-restaurant-form">
+         <h2>Enter Restaurant Name:</h2>
+         <p><input type = "text" name = "restaurant_name" value = ""/></p>
+         <h2>Enter Address:</h2>
+         <p><input type = "text" name = "address" value = ""/></p>
+         <h2>Enter City:</h2>
+         <p><input type = "text" name = "city" value = ""/></p>
+         <h2>Dietary Restriction Type:</h2>
+         <p>Vegetarian<input name = "checkbox" type="checkbox"  name="vegetarian"></p>
+         <p>Vegan<input name = "checkbox" type="checkbox"  name="vegan"></p>
+         <p>Gluten-Free<input name = "checkbox" type="checkbox"  name="gluten-free"></p>
+         <p>Halal<input name = "checkbox" type="checkbox"  name="halal"></p>
+         <h2>Price (1 - 5):</h2>
+         <input type="number" name="price" min="1" max="5" >
+         <h2>Rating (1 - 10):</h2>
+         <input type="number" name="rating" min="1" max="10" >
+         <br>
+         <input type = "submit" value = "submit" />
+      </form>
+   </body>
+
+   <script>
+   /* When the user clicks on the button,
+   toggle between hiding and showing the dropdown content */
+   function myFunction() {
+     document.getElementById("myDropdown").classList.toggle("show");
+   }
+
+   // Close the dropdown if the user clicks outside of it
+   window.onclick = function(event) {
+     if (!event.target.matches('.dropbtn')) {
+       var dropdowns = document.getElementsByClassName("dropdown-content");
+       var i;
+       for (i = 0; i < dropdowns.length; i++) {
+         var openDropdown = dropdowns[i];
+         if (openDropdown.classList.contains('show')) {
+           openDropdown.classList.remove('show');
+         }
+       }
+     }
+   }
+   </script>
+
+</html>
