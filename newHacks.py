@@ -32,10 +32,10 @@ class Restaurants(DB.Model):
 
     restaurant_id = DB.Column(DB.Integer, primary_key=True)
     restaurant_name = DB.Column(DB.String(100), nullable=False)
-    restaurant_address = DB.Column(DB.String(200), nullable=False)
-    restaurant_label = DB.Column(DB.String(150), nullable=False)
-    restaurant_price = DB.Column(DB.Integer, nullable=False)
-    restaurant_rating = DB.Column(DB.Integer, nullable=False)
+    address = DB.Column(DB.String(200), nullable=False)
+    label = DB.Column(DB.String(150), nullable=False)
+    price = DB.Column(DB.Integer, nullable=False)
+    rating = DB.Column(DB.Integer, nullable=False)
 
     def __repr__(self):
         return "<User %r>" % self.username
