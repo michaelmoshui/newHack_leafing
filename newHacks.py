@@ -10,22 +10,43 @@ from sqlalchemy.sql import text
 
 app = Flask(__name__)
 
+################# DB Set up starts
 # change to name of your database; add path if necessary
-db_name = "sockmarket.db"
+DB_NAME = "restaurant.db"
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + db_name
+# sets the url of the database
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + DB_NAME
 
+# TODO Find out what this does
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 
 # this variable, db, will be used for all SQLAlchemy commands
-db = SQLAlchemy(app)
+DB = SQLAlchemy(app)
+############ DB set up ends
+
+
+class Restaurants(DB.Model):
+    """
+    initializes the database
+    """
+
+    restaurant_id = DB.Column(DB.Integer, primary_key=True)
+    restaurant_name = DB.Column(DB.String(100), nullable=False)
+    restaurant_address = DB.Column(DB.String(200), nullable=False)
+    restaurant_label = DB.Column(DB.String(150), nullable=False)
+    restaurant_price = DB.Column(DB.Integer, nullable=False)
+    restaurant_rating = DB.Column(DB.Integer, nullable=False)
+
+    def __repr__(self):
+        return "<User %r>" % self.username
+
 
 # NOTHING BELOW THIS LINE NEEDS TO CHANGE
 # this route will test the database connection and nothing more
 @app.route("/")
 def testdb():
     try:
-        db.session.query(text("1")).from_statement(text("SELECT 1")).all()
+        DB.session.query(text("1")).from_statement(text("SELECT 1")).all()
         return "<h1>It works.</h1>"
     except Exception as e:
         # e holds description of the error
@@ -35,4 +56,11 @@ def testdb():
 
 
 if __name__ == "__main__":
+    try:
+        with app.app_context():
+            DB.create_all()
+        print("Works")
+    except:
+        print("Doesn't works")
+
     app.run(debug=True)
