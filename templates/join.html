@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link href="styles.css" rel="stylesheet">
-        <link href="join.css" rel="stylesheet">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/join.css') }}">
         <title>Join Leafing</title>
     </head>
     <body class="full-height-grow"  style = "background-image: url('joinBG.png')">
@@ -17,10 +17,10 @@
                 </a>
                 <nav class = "main-nav">
                     <ul>
-                        <li><a href = "addPlaces.html">Restaurants</a></li>
-                        <li><a href = "addPlaces.html">Add Places</a></li>
-                        <li><a href = "about.html">About</a></li>
-                        <li><a href = "join.html">Join</a></li>
+                        <li><a href = "/list">Restaurants</a></li>
+                        <li><a href = "/add">Add Places</a></li>
+                        <li><a href = "/about">About</a></li>
+                        <li><a href = "/join">Join</a></li>
                     </ul>
                 </nav>
             </header>

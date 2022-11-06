@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href = "list.css" rel = "stylesheet">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/list.css') }}">
     <title>Leafing</title>
 </head>
 <body class = "container full-height-grow" style = "background-image: url('vegetarianBG.png')">
@@ -15,12 +15,10 @@
         </a>
         <nav class = "main-nav">
             <ul>
-                <li>
-                  <a href = "list.html">Restaruants</a>
-                </li>
-                <li><a href = "addPlaces.html">Add Places</a></li>
-                <li><a href = "about.html">About</a></li>
-                <li><a href = "join.html">Join</a></li>
+                <li><a href = "/list">Restaurants</a></li>
+                <li><a href = "/add">Add Places</a></li>
+                <li><a href = "/about">About</a></li>
+                <li><a href = "/join">Join</a></li>
             </ul>
         </nav>
     </header>
