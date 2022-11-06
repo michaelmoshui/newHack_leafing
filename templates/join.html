@@ -8,11 +8,11 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/join.css') }}">
         <title>Join Leafing</title>
     </head>
-    <body class="full-height-grow"  style = "background-image: url('joinBG.png')">
+    <body class="full-height-grow"  style = "background-image: url('./static/images/joinBG.png')">
         <div class="container full-height-grow">
             <header class="main-header">
                 <a href="index.html" class="brand-logo">
-                    <img src="logo.png">
+                    <img src="{{url_for('static', filename='images/logo.png')}}">
                     <div class="brand-logo-name">Leafing</div>
                 </a>
                 <nav class = "main-nav">

@@ -7,10 +7,10 @@
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/add.css') }}">
   <title>Leafing</title>
 </head>
-   <body class = "container full-height-grow" style = "background-image: url('gluten-freeBG.png')">
+   <body class = "container full-height-grow" style = "background-image: url('./static/images/gluten-freeBG.png')">
      <header class = "main-header">
          <a href = "/" class = "brand-logo">
-             <img src = "images/logo.png">
+             <img src = "{{url_for('static', filename='images/logo.png')}}">
              <div class = "brand-logo-name">Leafing</div>
          </a>
          <nav class = "main-nav">

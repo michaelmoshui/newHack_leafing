@@ -182,14 +182,14 @@ def filter_price(price_min, price_max, dupl):
 
 # return a list of dictionary with the restaurant's information that contains the address
 def filter_label(label, dupl):
-    print(label)
+    # print(label)
     food = []
     if sum(label) == 0:
         return []
     else:
         for idx in range(len(dupl)):
             temp_data = dupl[idx]
-            print(temp_data)
+            # print(temp_data)
             if label[0] == 1:
                 if "vegetarian" in temp_data["label"]:
                     food.append(temp_data)
@@ -301,48 +301,47 @@ def filter_restaurants(user_input, data):  # user_input is a dictionary
         for entry in city:
             duplicates.append(entry)
             # pp.pprint(duplicates)
-    print("\n\n\n")
-    pp.pprint(duplicates)
+    # print("\n\n\n")
+    # pp.pprint(duplicates)
     if user_input["restaurant_name"] != "":
         name = filter_name(user_input["restaurant_name"], data)
         for entry in name:
             duplicates.append(entry)
-    print("\n\n\n")
-    pp.pprint(duplicates)
+    # print("\n\n\n")
+    # pp.pprint(duplicates)
     if user_input["address"] != "":
         address = filter_address(user_input["address"], data)
         for entry in address:
             duplicates.append(entry)
-    print("\n\n\n")
-    pp.pprint(duplicates)
+    # print("\n\n\n")
+    # pp.pprint(duplicates)
     label = filter_label(user_input["label"], duplicates)
     # print("LABBBBELLLL")
     # pp.pprint(label)
     for entry in label:
         duplicates.append(entry)
-    print("\n\n\nLABEL")
-    pp.pprint(duplicates)
+    # print("\n\n\nLABEL")
+    # pp.pprint(duplicates)
     if user_input["max_price"] is not None and user_input["min_price"] is not None:
         price = filter_price(
             user_input["min_price"], user_input["max_price"], duplicates
         )
         for entry in price:
             duplicates.append(entry)
-    print("\n\n\n")
-    pp.pprint(duplicates)
+    # print("\n\n\n")
+    # pp.pprint(duplicates)
     if user_input["rating"] is not None:
         rating = filter_rating(user_input["rating"], duplicates)
         for entry in rating:
             duplicates.append(entry)
-    print("\n\n\n")
-    pp.pprint(duplicates)
+    # print("\n\n\n")
+    # pp.pprint(duplicates)
 
     ret = []
 
     for dictionary in duplicates:
         if dictionary not in ret:
             ret.append(dictionary)
-
     return ret
 
 
@@ -418,6 +417,7 @@ class Restaurants(DB.Model):
 
 # NOTHING BELOW THIS LINE NEEDS TO CHANGE
 # this route will test the database connection and nothing more
+@app.route("/home")
 @app.route("/")
 def index():
     """
@@ -426,15 +426,19 @@ def index():
     return render_template("index.html")
 
 
-# def testdb():
-#     try:
-#         DB.session.query(text("1")).from_statement(text("SELECT 1")).all()
-#         return render_template("index.html")
-#     except Exception as e:
-#         # e holds description of the error
-#         error_text = "<p>The error:<br>" + str(e) + "</p>"
-#         hed = "<h1>Something is broken.</h1>"
-#         return hed + error_text
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/join")
+def join():
+    return render_template("join.html")
+
+
+@app.route("/add")
+def add():
+    return render_template("addPlaces.html")
 
 
 # @app.route("/list", methods=["GET"])
@@ -507,18 +511,17 @@ def filter():
         filter_dict["max_price"] = max_price
         filter_dict["rating"] = rating
         filter_dict["city"] = city
-        # print("\n\n\n\n\n\n\n\n\n\n")
-        # print(filter_dict)
-
-        # print("\n\n\n\n\n\n\nn\n\n\\n")
-        # pp.pprint(filter_dict)
-
-        # pp.pprint(data)
-        # print("FILTER QUERY")
-        # pp.pprint(filter_dict)
         filter_result = filter_restaurants(filter_dict, data)
-        for result in filter_result:
-            print("QUERY RESULT: ", result)
+        query_result = []
+        for dictionary in filter_result:
+            if dictionary not in query_result:
+                query_result.append(dictionary)
+        return render_template("list.html", results=query_result)
+
+    elif request.method == "GET":
+        return render_template("list.html")
+        # for result in query_result:
+        #     print("QUERY RESULT: ", result)
         # print("FILTER RESULT")
         # for result in filter_result:
         #     pp.pprint(result)
@@ -531,9 +534,6 @@ def filter():
         # for result in filter_result:
         #     print("Result:", result)
         # print("\n\n\n\n\n\n\nn\n\n\\n")
-        return "<h1>hello</h1>"
-    elif request.method == "GET":
-        return render_template("list.html")
 
 
 # TODO use anna's filter function

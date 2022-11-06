@@ -7,10 +7,11 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/list.css') }}">
     <title>Leafing</title>
 </head>
-<body class = "container full-height-grow" style = "background-image: url('vegetarianBG.png')">
+<body class = "container full-height-grow" style = "background-image: url('./static/images/vegetarianBG.png')">
     <header class = "main-header">
         <a href = "/" class = "brand-logo">
-            <img src = "images/logo.png">
+            <!-- <img src = "images/logo.png"> -->
+            <img src = "{{url_for('static', filename='images/logo.png')}}">
             <div class = "brand-logo-name">Leafing</div>
         </a>
         <nav class = "main-nav">
@@ -55,27 +56,37 @@
           <th>Rating</th>
           <th>City</th>
         </tr>
-        <tr>
-          <td>Restaurant Name</td>
-          <td class = "address">addrsdfjdskl</td>
-          <td>$$$</td>
-          <td>5</td>
-          <td>distance</td>
-        </tr>
-        <tr>
-          <td>Restaurant Name</td>
-          <td class = "address">addr</td>
-          <td>$$$</td>
-          <td>5</td>
-          <td>distance</td>
-        </tr>
-        <tr>
-          <td>Restaurant Name</td>
-          <td class = "address">adsfsgsgsgsgddsgsgfjgfjgddr</td>
-          <td>$$$</td>
-          <td>5</td>
-          <td>distance</td>
-        </tr>
+        {% for item in results %}
+            <tr>
+              <td>{{item["name"]}}</td>
+              <td>{{item["address"]}}</td>
+              <td>{{ "$" * item["price"] }}</td>
+              <td>{{item["rating"]}}</td>
+              <td>{{item["city"]}}</td>
+              <!-- not sure how to add distance -->
+            </tr>
+        {% endfor %}
+        <!-- <tr> -->
+        <!--   <td>Restaurant Name</td> -->
+        <!--   <td class = "address">addrsdfjdskl</td> -->
+        <!--   <td>$$$</td> -->
+        <!--   <td>5</td> -->
+        <!--   <td>distance</td> -->
+        <!-- </tr> -->
+        <!-- <tr> -->
+        <!--   <td>Restaurant Name</td> -->
+        <!--   <td class = "address">addr</td> -->
+        <!--   <td>$$$</td> -->
+        <!--   <td>5</td> -->
+        <!--   <td>distance</td> -->
+        <!-- </tr> -->
+        <!-- <tr> -->
+        <!--   <td>Restaurant Name</td> -->
+        <!--   <td class = "address">adsfsgsgsgsgddsgsgfjgfjgddr</td> -->
+        <!--   <td>$$$</td> -->
+        <!--   <td>5</td> -->
+        <!--   <td>distance</td> -->
+        <!-- </tr> -->
       </table>
       <br>
       <br>
