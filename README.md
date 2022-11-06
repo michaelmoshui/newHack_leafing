@@ -1,5 +1,5 @@
-Leafing - Project for NewHacks 2022
-Web app for people with dietary restrictions to share information about options offered by various restaurants.
+# Leafing - Project for NewHacks 2022
+## Web app for people with dietary restrictions to share information about options offered by various restaurants.
 
 💡Inspiration
 Research data from Statista and Statistics Canada has shown that "**over 20 percent** of Canadians observe some committed dietary regimen," and that "**more than half (54%)** of Canadians reported consuming food away from home at least once a week in 2016." Some of the most common dietary restrictions include vegan, vegetarianism, and gluten intolerance. Hence many problems arise as people with dietary restrictions needs to eat out more often, including the **lack of restaurants which provide these special food options and the lack of platforms to share information** about those restaurants that do exist. The motivation for this project, _Leafing_, came from the personal need to eat out with friends who have dietary restrictions.
