@@ -16,12 +16,7 @@
         <nav class = "main-nav">
             <ul>
                 <li>
-                  <select>
-                    <option value="vegetarian"><a href="vegetarian.html">Vegetarian</a></option>
-                    <option value="vegan"><a href="vegan.html">Vegan</a></option>
-                    <option value="gluten-free"><a href="gluten-free.html">Gluten-Free</a></option>
-                    <option value="halal"><a href="halal.html">Halal</a></option>
-                  </select>
+                  <a href = "list.html">Restaruants</a>
                 </li>
                 <li><a href = "addPlaces.html">Add Places</a></li>
                 <li><a href = "about.html">About</a></li>
@@ -30,14 +25,37 @@
         </nav>
     </header>
     <section clss = "main-list">
-      <h1>Vegetarian</h1>
+      <h1>Restaurants</h1>
+      <form action = "http://localhost:5000/list" method = "post">
+         <p class="filter" style="font-weight: bold">Name:</p>
+         <p class="filter"><input type = "text" name = "restaurant_name" value = ""/></p>
+         <p class="filter" style="font-weight: bold">Address:</p>
+         <p class="filter"><input type = "text" name = "address" value = ""/></p>
+         <p class="filter" style="font-weight: bold">City:</p>
+         <p class="filter"><input type = "text" name = "city" value = ""/></p>
+         <hr>
+         <p class="filter" style="font-weight: bold">Dietary Restrictions:</p>
+         <p class="filter"><input type="checkbox" name="vegetarian">   Vegetarian</p>
+         <p class="filter"><input type="checkbox" name="vegan">   Vegan</p>
+         <p class="filter"><input type="checkbox" name="gluten-free">   Gluten-Free</p>
+         <p class="filter"><input type="checkbox" name="halal">   Halal</p>
+         <hr>
+         <p class="filter" style="font-weight: bold">Min Price:</p>
+         <p class="filter"><input type = "number" name = "min-price" min = "1" max = "5"/></p>
+         <p class="filter" style="font-weight: bold">Max Price:</p>
+         <p class="filter"><input type = "number" name = "max-price" min = "1" max = "5"/></p>
+         <p class="filter" style="font-weight: bold">Rating:</p>
+         <p class="filter"><input type = "number" name = "rating" min = "1" max = "10"/></p>
+         <hr>
+         <p class="filter"><input type = "submit" value = "Filter" /></p>
+      </form>
       <table style="width:100%">
         <tr>
           <th>Restaruant</th>
           <th>Address</th>
           <th>Price</th>
           <th>Rating</th>
-          <th>Distance from me</th>
+          <th>City</th>
         </tr>
         <tr>
           <td>Restaurant Name</td>
@@ -61,6 +79,11 @@
           <td>distance</td>
         </tr>
       </table>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
     </section>
 </body>
 </html>
