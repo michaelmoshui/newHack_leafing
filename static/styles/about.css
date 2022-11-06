@@ -45,7 +45,7 @@ body {
 .main-nav a {
     color: inherit;
     text-decoration: none;
-    padding: 1em;
+    padding: 2em;
 }
 
 .main-nav a:hover {
