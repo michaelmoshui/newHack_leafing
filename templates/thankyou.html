@@ -8,10 +8,10 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/thankyou.css') }}">
 </head>
 
-<body class = "container full-height-grow" style = "background-image: url('thank-youBG.png')">
+<body class = "container full-height-grow" style = "background-image: url('./static/images/thank-youBG.png')">
     <header class = "main-header">
         <a href = "/" class = "brand-logo">
-            <img src = "logo.png">
+            <img src = "{{url_for('static', filename='images/logo.png')}}">
             <div class = "brand-logo-name">Leafing</div>
         </a>
         <nav class = "main-nav">
@@ -24,7 +24,7 @@
         </nav>
     </header>
     <section class = "welcome-main-section">
-        <h1>Thank you for signing up!</h1>
+        <h1>Thank you for contributing</h1>
     </section>
 </body>
 </html>

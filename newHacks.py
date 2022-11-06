@@ -352,7 +352,9 @@ def filter_restaurants(user_input, data):  # user_input is a dictionary
 ############ Filter ends
 
 
-def add_restaurant(DB, city, restaurant_name, address, label, price, rating):
+def add_restaurant(
+    DB, city, restaurant_name, address, label, price, rating, number_of_rating
+):
     """
     Create a new task
     :param conn:
@@ -368,13 +370,14 @@ def add_restaurant(DB, city, restaurant_name, address, label, price, rating):
     #     price=price,
     #     rating=rating,
     # )
-    query = 'INSERT INTO restaurants(city, restaurant_name, address, label, price, rating) values("{res_name}", "{region}", "{addr}", "{lab}", {pricing}, {rate})'.format(
+    query = 'INSERT INTO restaurants(city, restaurant_name, address, label, price, rating, number_of_rating) values("{res_name}", "{region}", "{addr}", "{lab}", {pricing}, {rate}, {number_of_rating})'.format(
         region=city.lower(),
         res_name=restaurant_name.lower(),
         addr=address.lower(),
         lab=label.lower(),
         pricing=price,
         rate=rating,
+        number_of_rating=number_of_rating,
     )
     with app.app_context():
         DB.session.execute(query)
@@ -409,16 +412,20 @@ class Restaurants(DB.Model):
     address = DB.Column(DB.String(200), nullable=False)
     label = DB.Column(DB.String(150), nullable=False)
     price = DB.Column(DB.Integer, nullable=False)
-    rating = DB.Column(DB.Integer, nullable=False)
+    rating = DB.Column(DB.Float, nullable=False)
+    number_of_rating = DB.Column(DB.Integer, nullable=False)
 
     def __repr__(self):
-        return "<User %r>" % self.username
+        return "<User {rating} {number}>".format(
+            rating=self.rating, number=self.number_of_rating
+        )
 
 
 # NOTHING BELOW THIS LINE NEEDS TO CHANGE
 # this route will test the database connection and nothing more
 @app.route("/home")
 @app.route("/")
+@app.route("/index")
 def index():
     """
     index
@@ -441,6 +448,11 @@ def add():
     return render_template("addPlaces.html")
 
 
+@app.route("/thankyou")
+def thankyou():
+    return render_template("thankyou.html")
+
+
 # @app.route("/list", methods=["GET"])
 @app.route("/list", methods=["POST", "GET"])
 def filter():
@@ -449,6 +461,7 @@ def filter():
         result = result.fetchall()
         data = {}
         for l in result:
+            print(l[4])
             data[l[0]] = {
                 "city": l[1],
                 "restaurant_name": l[2],
@@ -520,45 +533,77 @@ def filter():
 
     elif request.method == "GET":
         return render_template("list.html")
-        # for result in query_result:
-        #     print("QUERY RESULT: ", result)
-        # print("FILTER RESULT")
-        # for result in filter_result:
-        #     pp.pprint(result)
-        # list of dictionaries
-        # print(filter_result)
-        # for result in filter_result:
-        #     print("RESULT:", result)
-        # print("FILTER RESULT:", end="")
-        # pp.pprint(filter_result)
-        # for result in filter_result:
-        #     print("Result:", result)
-        # print("\n\n\n\n\n\n\nn\n\n\\n")
 
 
-# TODO use anna's filter function
+def update_rating(DB, entry):
+    query = Restaurants.query.filter_by(restaurant_id=entry[0]).first()
+    # print(query)
+    rating = query.rating
+    # print("RATING:", rating)
+    number_of_rating = query.number_of_rating
+    # print("NUMBER OF RATING:", number_of_rating)
+    # print("ENTRY 7:", entry[6])
+    query.rating = round((float(rating) + float(entry[6])) / (number_of_rating + 1), 1)
+    query.number_of_rating = query.number_of_rating + 1
+    DB.session.commit()
 
-#       <p><input type = "text" name = "restaurant_name" /></p>
-# <p><input type = "text" name = "address" /></p>
-# <p><input type="checkbox"  name="vegetarian"></p>
-# <p><input type="checkbox"  name="vegan"></p>
-# <p><input type="checkbox"  name="gluten-free"></p>
-# <p><input type="checkbox"  name="halal"></p>
-# <p><input type = "number" name = "min-price" min = "1" max = "5"/></p>
-# <p><input type = "number" name = "max-price" min = "1" max = "5"/></p>
-# <p><input type = "number" name = "rating" min = "1" max = "10"/></p>
-# <p><input type = "string" name = "city" /></p>
-# <p><input type = "submit" value = "submit" /></p>
+
+#    print(query)
 
 
 @app.route("/addPlaces", methods=["POST"])
-def add_entry():
+def addPlaces():
     if request.method == "POST":
         # extract data from the html form
         restaurant_name = request.form["restaurant_name"]
-        city = request.form["city"]
+        # print(restaurant_name)
         address = request.form["address"]
-        label = request.form["label"]
+
+        result = DB.session.execute("SELECT * FROM restaurants")
+        result = result.fetchall()
+        for entry in result:
+            # print(entry)
+            print("ENTRY")
+            print(entry[1], restaurant_name)
+            print(entry[3], address)
+            if (
+                entry[1].strip().lower() == restaurant_name.strip().lower()
+                and entry[3].strip().lower() == address.strip().lower()
+            ):
+                print("DUPLICATE!")
+                update_rating(DB, entry)
+                return redirect(url_for("thankyou"))
+
+        city = request.form["city"]
+        label_str = ""
+        if request.form.get("vegetarian"):
+            print("vegetarian")
+            label_str += "vegetarian "
+        if request.form.get("vegan"):
+            print("vegan")
+            label_str += "vegan "
+        if request.form.get("gluten-free"):
+            print("gluten free")
+            label_str += "glutenfree "
+        if request.form.get("halal"):
+            print("halal")
+            label_str += "halal"
+
+        # is_vegetarian = request.form.get("vegetarian")
+        # is_vegan = request.form.get("vegan")
+        # is_gluten_free = request.form.get("gluten-free")
+        # is_halal = request.form.get("halal")
+        # print("IS HALAL:", is_halal)
+        # label = ""
+        # if is_vegetarian == "on":
+        #     label += "vegetarian "
+        # if is_vegan == "on":
+        #     label += "vegan "
+        # if is_gluten_free == "on":
+        #     label += "glutenfree"
+        # if is_halal == "on":
+        #     label += "halal"
+
         price = float(request.form["price"])
         rating = float(request.form["rating"])
 
@@ -569,13 +614,14 @@ def add_entry():
             city=city,
             restaurant_name=restaurant_name,
             address=address,
-            label=label,
+            label=label_str,
             price=price,
             rating=rating,
+            number_of_rating=1,
         )
 
         # result = DB.session.execute("SELECT * FROM restaurants")
-        # for row in result:
+        # for row in respython3 newHacks.py ult:
         #     print(row)
 
         # TODO return error if not good
@@ -585,6 +631,7 @@ def add_entry():
         # print(restaurant_name, address, label, price, rating)
         # print("DATA\n\n\n\n\n\n\n")
         # return render_template("index.html", restaurant_name=restaurant_name)
+        return redirect(url_for("thankyou"))
     if request.method == "GET":
         error_text = "<h1>Error</h1>"
         return error_text

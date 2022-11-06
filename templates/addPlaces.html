@@ -23,24 +23,24 @@
          </nav>
      </header>
      <h1>Add a Restaurant</h1>
-      <form action = "http://localhost:5000/add" method = "post" class = "add-restaurant-form">
+      <form action = "http://localhost:5000/addPlaces" method = "post" class = "add-restaurant-form">
          <h2>Enter Restaurant Name:</h2>
-         <p><input type = "text" name = "restaurant_name" value = ""/></p>
+         <p><input type="text" name="restaurant_name" value = ""/></p>
          <h2>Enter Address:</h2>
-         <p><input type = "text" name = "address" value = ""/></p>
+         <p><input type="text" name="address" value = ""/></p>
          <h2>Enter City:</h2>
          <p><input type = "text" name = "city" value = ""/></p>
          <h2>Dietary Restriction Type:</h2>
-         <p>Vegetarian<input name = "checkbox" type="checkbox"  name="vegetarian"></p>
-         <p>Vegan<input name = "checkbox" type="checkbox"  name="vegan"></p>
-         <p>Gluten-Free<input name = "checkbox" type="checkbox"  name="gluten-free"></p>
-         <p>Halal<input name = "checkbox" type="checkbox"  name="halal"></p>
+         <p>Vegetarian<input type="checkbox"  name="vegetarian"/></p>
+         <p>Vegan<input type="checkbox"  name="vegan"/></p>
+         <p>Gluten-Free<input  type="checkbox"  name="gluten-free"/></p>
+         <p>Halal<input  type="checkbox"  name="halal"/></p>
          <h2>Price (1 - 5):</h2>
-         <input type="number" name="price" min="1" max="5" >
+         <input type="number" name="price" min="1" max="5" />
          <h2>Rating (1 - 10):</h2>
-         <input type="number" name="rating" min="1" max="10" >
+         <input type="number" name="rating" min="1" max="10" />
          <br>
-         <input type = "submit" value = "submit" />
+         <input type="submit" value ="Add" />
       </form>
    </body>
 </html>
