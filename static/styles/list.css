@@ -101,7 +101,7 @@ table {
 
 th {
   padding-right: 15px;
-  font-size: 45px;
+  font-size: 42px;
   border-bottom:3px solid seagreen;
 }
 
@@ -114,7 +114,7 @@ td {
   padding-top: 5px;
   padding-bottom: 5px;
   border-bottom:1px solid seagreen;
-  font-size: 28px
+  font-size: 26px
 }
 
 .address {
