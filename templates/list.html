@@ -11,8 +11,7 @@
     <header class = "main-header">
         <a href = "/" class = "brand-logo">
             <!-- <img src = "images/logo.png"> -->
-            <img src = "{{url_for('static', filename='images/logo.png')}}">
-            <div class = "brand-logo-name">Leafing</div>
+            <img src = "{{url_for('static', filename='images/logo.png')}}"> <div class = "brand-logo-name">Leafing</div>
         </a>
         <nav class = "main-nav">
             <ul>
@@ -58,11 +57,11 @@
         </tr>
         {% for item in results %}
             <tr>
-              <td>{{item["name"]}}</td>
+              <td>{{item["city"]}}</td>
               <td>{{item["address"]}}</td>
               <td>{{ "$" * item["price"] }}</td>
               <td>{{item["rating"]}}</td>
-              <td>{{item["city"]}}</td>
+              <td>{{item["name"]}}</td>
               <!-- not sure how to add distance -->
             </tr>
         {% endfor %}

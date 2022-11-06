@@ -41,8 +41,8 @@ DB = SQLAlchemy(app)
 # return a list of dictionary with the restaurant's information that contains the name
 def filter_name(name, data):
     food = []
-    for index, row in data.iterrows():
-        if name == row["restaurant_name"]:
+    for index, row in data.items():
+        if name == row["city"]:
             res = {
                 "name": row["restaurant_name"],
                 "city": row["city"],
@@ -51,7 +51,7 @@ def filter_name(name, data):
                 "price": row["price"],
                 "rating": row["rating"],
             }
-            food.insert(0, res)
+            food.append(res)
         elif name in row["restaurant_name"]:
             res = {
                 "name": row["restaurant_name"],
@@ -107,9 +107,10 @@ def filter_city(city, data):
     # print("\n\n\n\\n\n\n\n\n\n\n\n")
     food = []
     for index, row in data.items():
-        # print(city.lower())
-        # print(row["city"].lower())
-        if city.lower() == row["city"].lower():
+        print(row)
+        print(city.lower())
+        print(row["restaurant_name"].lower())
+        if city.lower() == row["restaurant_name"].lower():
             # print(row)
             res = {
                 "name": row["restaurant_name"],
@@ -182,42 +183,60 @@ def filter_price(price_min, price_max, dupl):
 
 # return a list of dictionary with the restaurant's information that contains the address
 def filter_label(label, dupl):
-    # print(label)
+    print(label)  # [1,0,0,0]
+    pp.pprint(dupl)
     food = []
+
     if sum(label) == 0:
         return []
     else:
         for idx in range(len(dupl)):
-            temp_data = dupl[idx]
+            print("label")
             # print(temp_data)
+            temp_data = dupl[idx]
+            print(temp_data)
             if label[0] == 1:
+                print("label[0] is 1")
                 if "vegetarian" in temp_data["label"]:
+                    print("vegetarian", temp_data["label"])
+                    temp_name = temp_data["city"]
+                    temp_data["city"] = temp_data["name"]
+                    temp_data["name"] = temp_name
                     food.append(temp_data)
                     continue
             if label[1] == 1:
                 if "vegan" in temp_data["label"]:
+                    temp_name = temp_data["city"]
+                    temp_data["city"] = temp_data["name"]
+                    temp_data["name"] = temp_name
                     food.append(temp_data)
                     continue
             if label[2] == 1:
                 if "glutenfree" in temp_data["label"]:
+                    temp_name = temp_data["city"]
+                    temp_data["city"] = temp_data["name"]
+                    temp_data["name"] = temp_name
                     food.append(temp_data)
                     continue
             if label[3] == 1:
                 if "halal" in temp_data["label"]:
+                    temp_name = temp_data["city"]
+                    temp_data["city"] = temp_data["name"]
+                    temp_data["name"] = temp_name
                     food.append(temp_data)
                     continue
         return food
-        # for index, row in temp_data.items():
-        #     if label[i] and row["label"][i]:
-        #         res = {
-        #             "name": row["restaurant_name"],
-        #             "city": row["city"],
-        #             "address": row["address"],
-        #             "label": row["label"],
-        #             "price": row["price"],
-        #             "rating": row["rating"],
-        #         }
-        #         food.append(res)
+    # for index, row in temp_data.items():
+    #     if label[i] and row["label"][i]:
+    #         res = {
+    #             "name": row["restaurant_name"],
+    #             "city": row["city"],
+    #             "address": row["address"],
+    #             "label": row["label"],
+    #             "price": row["price"],
+    #             "rating": row["rating"],
+    #         }
+    #         food.append(res)
     # if sum(label) == 0:
     #     for index, row in data.items():
     #         res = {
@@ -290,56 +309,64 @@ def filter_rating(rating, dupl):
 
 def filter_restaurants(user_input, data):  # user_input is a dictionary
     # print(user_input)
-    # pp.pprint(data)
+    print("filter restaurants data")
+    pp.pprint(data)
     # data is a dictionary of dictionaries with restaurant_id
     result = []
     duplicates = []
     if user_input["city"] != "":
         # print("USERINPUT", user_input["city"])
         city = filter_city(user_input["city"], data)
-        # pp.pprint(city)
+        print("city", city)
         for entry in city:
             duplicates.append(entry)
             # pp.pprint(duplicates)
-    # print("\n\n\n")
-    # pp.pprint(duplicates)
     if user_input["restaurant_name"] != "":
         name = filter_name(user_input["restaurant_name"], data)
         for entry in name:
             duplicates.append(entry)
-    # print("\n\n\n")
-    # pp.pprint(duplicates)
     if user_input["address"] != "":
         address = filter_address(user_input["address"], data)
         for entry in address:
             duplicates.append(entry)
-    # print("\n\n\n")
-    # pp.pprint(duplicates)
+
+    if duplicates == []:
+        for item in data:
+            print("ITEM")
+            pp.pprint(data[item])
+            res = {
+                "name": data[item]["restaurant_name"],
+                "city": data[item]["city"],
+                "address": data[item]["address"],
+                "label": data[item]["label"],
+                "price": data[item]["price"],
+                "rating": data[item]["rating"],
+            }
+            duplicates.append(res)
+        print("duplicates is empty")
+    print(duplicates)
+
     label = filter_label(user_input["label"], duplicates)
-    # print("LABBBBELLLL")
-    # pp.pprint(label)
-    for entry in label:
-        duplicates.append(entry)
-    # print("\n\n\nLABEL")
-    # pp.pprint(duplicates)
+    new_list = []
+    if label != []:
+        for entry in label:
+            new_list.append(entry)
+    elif label == []:
+        new_list = duplicates
+
     if user_input["max_price"] is not None and user_input["min_price"] is not None:
-        price = filter_price(
-            user_input["min_price"], user_input["max_price"], duplicates
-        )
+        price = filter_price(user_input["min_price"], user_input["max_price"], new_list)
         for entry in price:
-            duplicates.append(entry)
-    # print("\n\n\n")
-    # pp.pprint(duplicates)
+            new_list.append(entry)
+
     if user_input["rating"] is not None:
-        rating = filter_rating(user_input["rating"], duplicates)
+        rating = filter_rating(user_input["rating"], new_list)
         for entry in rating:
-            duplicates.append(entry)
-    # print("\n\n\n")
-    # pp.pprint(duplicates)
+            new_list.append(entry)
 
     ret = []
 
-    for dictionary in duplicates:
+    for dictionary in new_list:
         if dictionary not in ret:
             ret.append(dictionary)
     return ret
@@ -407,8 +434,8 @@ class Restaurants(DB.Model):
     # DB.Column("rating", DB.Integer, nullable=False)
 
     restaurant_id = DB.Column(DB.Integer, primary_key=True)
-    city = DB.Column(DB.String(50), nullable=False)
     restaurant_name = DB.Column(DB.String(100), nullable=False)
+    city = DB.Column(DB.String(50), nullable=False)
     address = DB.Column(DB.String(200), nullable=False)
     label = DB.Column(DB.String(150), nullable=False)
     price = DB.Column(DB.Integer, nullable=False)
@@ -517,14 +544,18 @@ def filter():
         city = request.form["city"]
         # label = request.form["label"]
 
-        filter_dict["restaurant_name"] = restaurant_name
-        filter_dict["address"] = address
+        filter_dict["restaurant_name"] = restaurant_name.lower()
+        filter_dict["address"] = address.lower()
         filter_dict["label"] = [is_vegan, is_vegetarian, is_gluten_free, is_halal]
         filter_dict["min_price"] = min_price
         filter_dict["max_price"] = max_price
         filter_dict["rating"] = rating
-        filter_dict["city"] = city
+        filter_dict["city"] = city.lower()
+        pp.pprint(filter_dict)
+        pp.pprint(data)
         filter_result = filter_restaurants(filter_dict, data)
+        # print("filter result")
+        # pp.pprint(filter_result)
         query_result = []
         for dictionary in filter_result:
             if dictionary not in query_result:
@@ -611,8 +642,8 @@ def addPlaces():
         # adds restaurant to the database
         add_restaurant(
             DB,
-            city=city,
-            restaurant_name=restaurant_name,
+            restaurant_name=city,
+            city=restaurant_name,
             address=address,
             label=label_str,
             price=price,
