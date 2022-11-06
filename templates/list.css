@@ -10,7 +10,7 @@ body {
     background-color:#f0f8ff;
     font-family: Poppins, sans-serif;
     font-size: large;
-    color:rgb(28, 115, 65);
+    color:seagreen;
     min-height: 100vh;
 }
 
@@ -50,7 +50,7 @@ body {
 }
 
 .main-nav a:hover {
-    color:green;
+    color:seagreen;
 }
 
 .main-header {
@@ -81,7 +81,7 @@ body {
 
 .btn {
     color: #f0f8ff;
-    background-color: rgb(28, 115, 65);
+    background-color: seagreen;
     padding: .75rem 1.5rem;
     border-radius: .5rem;
     text-decoration: none;
@@ -90,18 +90,9 @@ body {
 
 /* new stuff */
 
-select {
-  padding: 0;
-  margin: 0;
-  background-color:#f0f8ff;
-  font-family: Poppins, sans-serif;
-  font-size: large;
-  color:rgb(28, 115, 65);
-  border: none
-}
-
 h1 {
-  font-size: 60px
+  font-size: 60px;
+  margin-bottom:20px;
 }
 
 table {
@@ -110,8 +101,8 @@ table {
 
 th {
   padding-right: 15px;
-  font-size: 30px;
-  border-bottom:3px solid rgb(28, 115, 65);
+  font-size: 35px;
+  border-bottom:3px solid seagreen;
 }
 
 tr {
@@ -122,10 +113,67 @@ td {
   padding-right: 15px;
   padding-top: 5px;
   padding-bottom: 5px;
-  border-bottom:1px solid rgb(28, 115, 65)
+  border-bottom:1px solid seagreen;
+  font-size: 25px
 }
 
 .address {
   max-width: 5px;
   overflow-wrap: break-word;
+}
+
+.filter-form {
+  width: 100%
+}
+
+.filter {
+  display: inline-block;
+  font-size: 20px;
+  margin: 8px;
+}
+
+input[type="text"] {
+  border-radius: 5%;
+  border: 2px seagreen solid;
+  width: 200px;
+  height: 30px;
+}
+
+input[type="number"] {
+  border-radius: 5%;
+  border: 2px seagreen solid;
+  width: 100px;
+  height: 30px;
+}
+
+input[type="checkbox"] {
+  border-radius: 5%;
+  border: 2px seagreen solid;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
+
+input[type="submit"] {
+  margin-top: 30px;
+  border: 2px seagreen solid;
+  border-radius: 5%;
+  background-color: white;
+  color: seagreen;
+  width: 220px;
+  height: 50px;
+  font-size: 25px;
+  margin-bottom: 35px;
+}
+
+input[type="submit"]:hover {
+  margin-top: 30px;
+  border: 2px seagreen solid;
+  border-radius: 5%;
+  background-color: seagreen;
+  color: white;
+  width: 220px;
+  height: 50px;
+  font-size: 25px;
+  margin-bottom: 35px;
 }
