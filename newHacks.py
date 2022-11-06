@@ -93,15 +93,19 @@ class Restaurants(DB.Model):
 # NOTHING BELOW THIS LINE NEEDS TO CHANGE
 # this route will test the database connection and nothing more
 @app.route("/")
-def testdb():
-    try:
-        DB.session.query(text("1")).from_statement(text("SELECT 1")).all()
-        return render_template("index.html")
-    except Exception as e:
-        # e holds description of the error
-        error_text = "<p>The error:<br>" + str(e) + "</p>"
-        hed = "<h1>Something is broken.</h1>"
-        return hed + error_text
+def index():
+    return render_template("index.html")
+
+
+# def testdb():
+#     try:
+#         DB.session.query(text("1")).from_statement(text("SELECT 1")).all()
+#         return render_template("index.html")
+#     except Exception as e:
+#         # e holds description of the error
+#         error_text = "<p>The error:<br>" + str(e) + "</p>"
+#         hed = "<h1>Something is broken.</h1>"
+#         return hed + error_text
 
 
 @app.route("/list", methods=["GET"])
@@ -200,7 +204,7 @@ def add_entry():
         # print("DATA\n\n\n\n\n\n\n")
         # print(restaurant_name, address, label, price, rating)
         # print("DATA\n\n\n\n\n\n\n")
-        return render_template("index.html", restaurant_name=restaurant_name)
+        # return render_template("index.html", restaurant_name=restaurant_name)
     if request.method == "GET":
         error_text = "<h1>Hello</h1>"
         return error_text
